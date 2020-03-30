@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App desc="类组件世纪城React.Component的"/>
   </React.StrictMode>,
   document.getElementById('root')
 );
