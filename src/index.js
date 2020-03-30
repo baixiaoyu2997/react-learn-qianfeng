@@ -1,24 +1,14 @@
-import React, { useState,useEffect } from "react";
+import React from "react";
 import ReactDOM from "react-dom";
-// import App from "./App";
+import { CounterProvider } from "./CounterStore";
 
-const Counteer = () => {
-  const [count, setCount] = useState(0);
-  useEffect(()=>{
-    console.log('更新了')
-  })
-  return (
-    <div>
-      <button onClick={()=>{setCount(count-1)}}>-</button>
-      <span>{count}</span>
-      <button onClick={()=>{setCount(count+1)}}>+</button>
-    </div>
-  );
-};
+import App from "./App";
+
 ReactDOM.render(
   <React.StrictMode>
-    {/* <App desc="类组件世纪城React.Component的"/> */}
-    <Counteer></Counteer>
+    <CounterProvider>
+      <App desc="类组件世纪城React.Component的" />
+    </CounterProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
