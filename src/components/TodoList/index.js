@@ -8,7 +8,7 @@ class TodoList extends Component {
       PropTypes.shape({
         id: PropTypes.number.isRequired,
         title: PropTypes.string.isRequired,
-        isCompleted: PropTypes.bool.isRequired,
+        completed: PropTypes.bool.isRequired,
         onCompeletedChange:PropTypes.func
       })
     ).isRequired
