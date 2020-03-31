@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
-import { Counter,CountBtn} from "./components"
+import React, { Component } from "react";
+import { CartList } from "./components";
 class App extends Component {
   render() {
     return (
-      <>
-        <CountBtn type="decrement">-</CountBtn>  
-        <Counter></Counter>
-        <CountBtn type="increment">+</CountBtn>
-      </>
+      <div>
+        <CartList store={this.props.store}></CartList>
+      </div>
     );
   }
 }

@@ -1,14 +1,9 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { CounterProvider } from "./CounterStore";
-
-import App from "./App";
-
-ReactDOM.render(
-  <React.StrictMode>
-    <CounterProvider>
-      <App desc="类组件世纪城React.Component的" />
-    </CounterProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+import React from 'react'
+import {render} from 'react-dom'
+import App from './App'
+import store from './store'
+console.log(store)
+render(
+  <App store={store}></App>,
+  document.querySelector('#root')
+)
