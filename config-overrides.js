@@ -1,4 +1,4 @@
-const { override, fixBabelImports, addLessLoader } = require("customize-cra");
+const { override, fixBabelImports, addLessLoader,addDecoratorsLegacy } = require("customize-cra");
 const theme=require('./theme')
 module.exports = function override(config, env) {
   // do stuff with the webpack config...
@@ -10,8 +10,9 @@ module.exports = override(
     libraryDirectory: "es",
     style: true
   }),
+  addDecoratorsLegacy(),
   addLessLoader({
     javascriptEnabled: true,
-    modifyVars: theme
+    modifyVars:theme
   })
 );

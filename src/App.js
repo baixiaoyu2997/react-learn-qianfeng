@@ -1,17 +1,24 @@
 import React, { Component } from "react";
-import { Button,Spin,Pagination,Badge } from "antd";
+import { Button } from "antd";
+
+const testHOC = WrappedComponent => {
+  return class HOCComponent extends Component {
+    render() {
+      return (
+        <>
+          <WrappedComponent />
+          <div>这里是高阶组件</div>
+        </>
+      );
+    }
+  };
+};
+@testHOC
 class App extends Component {
   render() {
     return (
       <div>
-        <Button>你好</Button>
-        <Spin>
-          <div>dfjsdkfjlskdfklfklsjklsdfjsdk</div>
-        </Spin>
-        <Pagination showQuickJumper showSizeChanger defaultCurrent={2} total={500}></Pagination>
-        <Badge count={5}>
-          <span>这是徽章</span>>
-        </Badge>
+        <Button type="primary">测试按钮</Button>
       </div>
     );
   }
