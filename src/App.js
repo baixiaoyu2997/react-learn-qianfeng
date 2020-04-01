@@ -1,24 +1,27 @@
 import React, { Component } from "react";
-import { Button } from "antd";
-
-const testHOC = WrappedComponent => {
-  return class HOCComponent extends Component {
-    render() {
-      return (
-        <>
-          <WrappedComponent />
-          <div>这里是高阶组件</div>
-        </>
-      );
-    }
-  };
-};
-@testHOC
+import { adminRouter } from "./routes";
+import { Switch, Route, Redirect } from "react-router-dom";
 class App extends Component {
   render() {
     return (
       <div>
-        <Button type="primary">测试按钮</Button>
+        <div>这里是公共的部分</div>
+        <Switch>
+          {adminRouter.map(route => {
+            return (
+              <Route
+                key={route.pathname}
+                path={route.pathname}
+                exact={route.exact}
+                render={routerProps => {
+                  return <route.component {...routerProps} />;
+                }}
+              />
+            );
+          })}
+          <Redirect to={adminRouter[0].pathname} from="/admin" exact></Redirect>
+          <Redirect to="/404" ></Redirect>
+        </Switch>
       </div>
     );
   }
