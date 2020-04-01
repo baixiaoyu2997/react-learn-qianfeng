@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button,Spin,Pagination } from "antd";
+import { Button,Spin,Pagination,Badge } from "antd";
 class App extends Component {
   render() {
     return (
@@ -9,6 +9,9 @@ class App extends Component {
           <div>dfjsdkfjlskdfklfklsjklsdfjsdk</div>
         </Spin>
         <Pagination showQuickJumper showSizeChanger defaultCurrent={2} total={500}></Pagination>
+        <Badge count={5}>
+          <span>这是徽章</span>>
+        </Badge>
       </div>
     );
   }
