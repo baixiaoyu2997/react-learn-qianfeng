@@ -1,13 +1,13 @@
 import React from "react";
 
 import { render } from "react-dom";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { ConfigProvider } from "antd";
+import zhCN from 'antd/es/locale/zh_CN';
 import App from "./App";
 
 render(
-  <Router>
-    <Route component={App} path="/">
-    </Route>
-  </Router>,
+  <ConfigProvider locale={zhCN}>
+    <App />
+  </ConfigProvider>,
   document.getElementById("root")
 );
