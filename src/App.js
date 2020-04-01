@@ -17,7 +17,9 @@ class App extends Component {
           </li>
         </ul>
         <Switch>
-          <Route component={Home} path="/home" />
+          <Route render={(routeProps)=>{
+            return <Home x="1" {...routeProps}></Home>
+          }} path="/home" />
           <Route component={Artical} path="/artical" />
           <Route component={Users} path="/users" />
           <Route component={NotFound} path="/404" />
