@@ -1,10 +1,6 @@
 import React, { Component } from "react";
-import { Layout, Menu, Breadcrumb } from "antd";
-import {
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined
-} from "@ant-design/icons";
+import { Layout, Menu } from "antd";
+
 import "./index.less";
 import { adminRoutes } from "../../routes";
 import { withRouter } from "react-router-dom";
@@ -13,12 +9,12 @@ const { Header, Content, Sider } = Layout;
 @withRouter
 class Frame extends Component {
   menus = adminRoutes.filter(route => route.isNav);
-  onMenuClick=({key})=>{
-    this.props.history.push(key)
-  }
+  onMenuClick = ({ key }) => {
+    this.props.history.push(key);
+  };
   render() {
     return (
-      <Layout style={{minHeight:'100%'}}>
+      <Layout style={{ minHeight: "100%" }}>
         <Header
           className="header fantuan-header"
           style={{ background: "white" }}
@@ -52,10 +48,8 @@ class Frame extends Component {
             <Content
               className="site-layout-background"
               style={{
-                padding: 24,
                 margin: 0,
-                minHeight: 280,
-                background:'#fff'
+                background: "#fff"
               }}
             >
               {this.props.children}
