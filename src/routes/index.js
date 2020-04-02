@@ -1,3 +1,5 @@
+import * as Icon from '@ant-design/icons';
+
 import {
   Dashboard,
   Login,
@@ -6,7 +8,6 @@ import {
   ArticleList,
   ArticleEdit
 } from "../views";
-
 export const mainRoutes = [
   {
     pathname: "/login",
@@ -23,12 +24,14 @@ export const adminRoutes = [
     pathname: "/admin/dashboard",
     component: Dashboard,
     title: "仪表盘",
+    icon:Icon.DashboardOutlined,
     isNav: true
   },
   {
     pathname: "/admin/article",
     component: ArticleList,
     title:'文章管理',
+    icon:Icon.UnorderedListOutlined,
     isNav:true,
     exact: true
   },
@@ -40,6 +43,7 @@ export const adminRoutes = [
     pathname: "/admin/settings",
     component: Settings,
     title: "设置",
+    icon:Icon.SettingOutlined,
     isNav: true
   }
 ];

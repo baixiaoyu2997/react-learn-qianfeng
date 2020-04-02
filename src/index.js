@@ -3,6 +3,7 @@ import { render } from "react-dom";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import App from "./App";
 import { mainRoutes } from "./routes";
+import './index.less'
 render(
   <Router>
     <Switch>

@@ -7,13 +7,18 @@ import {
 } from "@ant-design/icons";
 import "./index.less";
 import { adminRoutes } from "../../routes";
+import { withRouter } from "react-router-dom";
 
 const { Header, Content, Sider } = Layout;
+@withRouter
 class Frame extends Component {
   menus = adminRoutes.filter(route => route.isNav);
+  onMenuClick=({key})=>{
+    this.props.history.push(key)
+  }
   render() {
     return (
-      <Layout>
+      <Layout style={{minHeight:'100%'}}>
         <Header
           className="header fantuan-header"
           style={{ background: "white" }}
@@ -29,27 +34,28 @@ class Frame extends Component {
           <Sider width={200} className="site-layout-background">
             <Menu
               mode="inline"
-              defaultSelectedKeys={["1"]}
-              defaultOpenKeys={["sub1"]}
+              selectedKeys={[this.props.location.pathname]}
+              onClick={this.onMenuClick}
               style={{ height: "100%", borderRight: 0 }}
             >
               {this.menus.map(item => {
-                return <Menu.Item key={item.pathname}>{item.title}</Menu.Item>;
+                return (
+                  <Menu.Item key={item.pathname}>
+                    <item.icon />
+                    {item.title}
+                  </Menu.Item>
+                );
               })}
             </Menu>
           </Sider>
-          <Layout style={{ padding: "0 24px 24px" }}>
-            <Breadcrumb style={{ margin: "16px 0" }}>
-              <Breadcrumb.Item>Home</Breadcrumb.Item>
-              <Breadcrumb.Item>List</Breadcrumb.Item>
-              <Breadcrumb.Item>App</Breadcrumb.Item>
-            </Breadcrumb>
+          <Layout style={{ padding: "16px" }}>
             <Content
               className="site-layout-background"
               style={{
                 padding: 24,
                 margin: 0,
-                minHeight: 280
+                minHeight: 280,
+                background:'#fff'
               }}
             >
               {this.props.children}
