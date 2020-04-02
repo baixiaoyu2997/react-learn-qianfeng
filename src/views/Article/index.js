@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import { Card, Button, Table, Tag } from "antd";
-import { getArticles } from "../../requests";
+import { Card, Button, Table, Tag, Modal, Typography } from "antd";
+import { getArticles, deleteArticle } from "../../requests";
 import moment from "moment";
+const ButtonGroup = Button.Group;
 const titleDisplayMap = {
   id: "id",
   title: "标题",
@@ -16,14 +17,28 @@ class Article extends Component {
     this.state = {
       dataSource: [],
       columns: [],
-      total: 0
+      total: 0,
+      isLoading: false
     };
   }
   componentDidMount() {
     this.getData();
   }
+  // 删除文章
+  deleteArticle = record => {
+    console.log(record);
+    Modal.confirm({
+      title: <Typography>`确定要删除${record.title}吗?`</Typography>,
+      content: `此操作不可逆`,
+      onOk() {
+        deleteArticle(record.id).then(data => {
+          console.log(data)
+        });
+      }
+    });
+  };
   createColumns = data => {
-    return Object.keys(data.list[0]).map(x => {
+    const columns = Object.keys(data.list[0]).map(x => {
       if (x === "amount") {
         return {
           title: titleDisplayMap[x],
@@ -49,16 +64,47 @@ class Article extends Component {
         key: x
       };
     });
-  };
-  getData = () => {
-    getArticles().then(data => {
-      const columns = this.createColumns(data);
-      this.setState({
-        total: data.total,
-        dataSource: data.list,
-        columns
-      });
+    columns.push({
+      title: "操作",
+      key: "action",
+      render: (text, record) => {
+        return (
+          <ButtonGroup>
+            <Button size="samll" type="primary">
+              编辑
+            </Button>
+            <Button
+              size="samll"
+              type="danger"
+              onClick={() => this.deleteArticle(record)}
+            >
+              删除
+            </Button>
+          </ButtonGroup>
+        );
+      }
     });
+    return columns;
+  };
+  // 获取文章列表
+  getData = () => {
+    this.setState({
+      isLoading: true
+    });
+    getArticles()
+      .then(data => {
+        const columns = this.createColumns(data);
+        this.setState({
+          total: data.total,
+          dataSource: data.list,
+          columns
+        });
+      })
+      .finally(() => {
+        this.setState({
+          isLoading: false
+        });
+      });
   };
   render() {
     return (
@@ -69,6 +115,7 @@ class Article extends Component {
             dataSource={this.state.dataSource}
             columns={this.state.columns}
             pagination={{ total: this.state.total, hideOnSinglePage: true }}
+            loading={this.state.isLoading}
           ></Table>
         </Card>
       </div>
