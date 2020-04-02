@@ -30,9 +30,9 @@ class Article extends Component {
     Modal.confirm({
       title: <Typography>`确定要删除${record.title}吗?`</Typography>,
       content: `此操作不可逆`,
-      onOk() {
+      onOk:()=>{
         deleteArticle(record.id).then(data => {
-          console.log(data)
+          this.getData()
         });
       }
     });
