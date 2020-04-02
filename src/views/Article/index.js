@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Card, Button, Table,Tag } from "antd";
+import { Card, Button, Table, Tag } from "antd";
 import { getArticles } from "../../requests";
-
+import moment from "moment";
 const titleDisplayMap = {
   id: "id",
   title: "标题",
@@ -19,20 +19,6 @@ class Article extends Component {
       total: 0
     };
   }
-  render() {
-    console.log("render");
-    return (
-      <div>
-        <Card title="文章列表" bordered={false} extra={<Button>导入</Button>}>
-          <Table
-            dataSource={this.state.dataSource}
-            columns={this.state.columns}
-            pagination={{ total: this.state.total, hideOnSinglePage: true }}
-          ></Table>
-        </Card>
-      </div>
-    );
-  }
   componentDidMount() {
     this.getData();
   }
@@ -41,10 +27,20 @@ class Article extends Component {
       if (x === "amount") {
         return {
           title: titleDisplayMap[x],
-          render:(text,reccord)=>{
-          return <Tag color="green">{reccord.amount}</Tag>
+          render: (text, reccord) => {
+            return <Tag color="green">{reccord.amount}</Tag>;
           },
           key: x
+        };
+      }
+      if (x === "createAt") {
+        return {
+          title: titleDisplayMap[x],
+          key: x,
+          render: (text, reccord) => {
+            const { createAt } = reccord;
+            return moment(createAt).format("YYYY年MM月DD日 hh时mm分ss秒");
+          }
         };
       }
       return {
@@ -64,6 +60,20 @@ class Article extends Component {
       });
     });
   };
+  render() {
+    return (
+      <div>
+        <Card title="文章列表" bordered={false} extra={<Button>导入</Button>}>
+          <Table
+            rowKey={record => record.id}
+            dataSource={this.state.dataSource}
+            columns={this.state.columns}
+            pagination={{ total: this.state.total, hideOnSinglePage: true }}
+          ></Table>
+        </Card>
+      </div>
+    );
+  }
 }
 
 export default Article;
