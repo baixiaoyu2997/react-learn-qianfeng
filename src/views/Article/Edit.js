@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Card, Button, Form, Icon, Input } from "antd";
+import { Card, Button, Form, DatePicker, Input, InputNumber } from "antd";
 const layout = {
   labelCol: {
-    span: 8
+    span: 4
   },
   wrapperCol: {
     span: 16
@@ -15,12 +15,12 @@ const tailLayout = {
   }
 };
 class Edit extends Component {
-  constructor(){
-    super()
-    this.state={
-      titleValidateStatus:'',
-      titleHelp:''
-    }
+  constructor() {
+    super();
+    this.state = {
+      titleValidateStatus: "",
+      titleHelp: ""
+    };
   }
   onFinish = values => {
     console.log("Success:", values);
@@ -42,47 +42,64 @@ class Edit extends Component {
           onFinishFailed={this.onFinishFailed}
         >
           <Form.Item
-            label="Username"
-            name="username"
-            validateStatus={this.state.titleValidateStatus}
-            help={this.state.titleHelp}
-            rules={[
-              {
-                validator:(rule,value,callback)=>{
-                 if(value!=='123'){
-                   this.setState({
-                     titleValidateStatus:'error',
-                     titleHelp:'title不正确'
-                   })
-                 }else{
-                   this.setState({
-                    titleValidateStatus:'',
-                    titleHelp:''
-                   })
-                 }
-                 callback()
-                },
-              }
-            ]}
+            label="标题"
+            name="title"
+            rules={[{ required: true, message: "标题是必须的" }]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
-            label="Password"
-            name="password"
+            label="作者"
+            name="auther"
             rules={[
               {
                 required: true,
-                message: "Please input your password!"
+                message: "作者是必填的"
               }
             ]}
           >
-            <Input.Password />
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="阅读量"
+            name="amount"
+            rules={[
+              {
+                required: true,
+                message: "阅读量是必填的"
+              }
+            ]}
+          >
+            <InputNumber></InputNumber>
+          </Form.Item>
+          <Form.Item
+            label="创建时间"
+            name="createAt"
+            rules={[
+              {
+                required: true,
+                message: "创建时间是必填的"
+              }
+            ]}
+          >
+            <DatePicker showTime placeholder="选择时间"></DatePicker>
+          </Form.Item>
+          <Form.Item
+            label="内容"
+            name="content"
+            rules={[
+              {
+                required: true,
+                message: "内容是必填的"
+              }
+            ]}
+          >
+            <div>这里是内容</div>
           </Form.Item>
           <Form.Item {...tailLayout}>
             <Button type="primary" htmlType="submit">
-              Submit
+              保存修改
             </Button>
           </Form.Item>
         </Form>
