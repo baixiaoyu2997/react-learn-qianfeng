@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import { render } from "react-dom";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import App from "./App";
-import { mainRouter } from "./routes";
+import { mainRoutes } from "./routes";
 render(
   <Router>
     <Switch>
@@ -12,7 +12,7 @@ render(
           return <App {...routerProps} />;
         }}
       />
-      {mainRouter.map(route => {
+      {mainRoutes.map(route => {
         return <Route key={route.pathname} path={route.pathname} component={route.component} />;
       })}
       <Redirect to="/admin" exact from="/"></Redirect>

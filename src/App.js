@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import { adminRouter } from "./routes";
+import { adminRoutes } from "./routes";
 import { Switch, Route, Redirect } from "react-router-dom";
+import { Frame } from "./components";
 class App extends Component {
   render() {
     return (
-      <div>
-        <div>这里是公共的部分</div>
+      <Frame>
         <Switch>
-          {adminRouter.map(route => {
+          {adminRoutes.map(route => {
             return (
               <Route
                 key={route.pathname}
@@ -19,10 +19,10 @@ class App extends Component {
               />
             );
           })}
-          <Redirect to={adminRouter[0].pathname} from="/admin" exact></Redirect>
-          <Redirect to="/404" ></Redirect>
+          <Redirect to={adminRoutes[0].pathname} from="/admin" exact></Redirect>
+          <Redirect to="/404"></Redirect>
         </Switch>
-      </div>
+      </Frame>
     );
   }
 }
