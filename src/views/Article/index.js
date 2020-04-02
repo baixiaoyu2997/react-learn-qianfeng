@@ -1,60 +1,69 @@
 import React, { Component } from "react";
-import { Card, Button, Table } from "antd";
-import {getArticles} from '../../requests'
+import { Card, Button, Table,Tag } from "antd";
+import { getArticles } from "../../requests";
+
+const titleDisplayMap = {
+  id: "id",
+  title: "标题",
+  author: "作者",
+  createAt: "创建时间",
+  amount: "阅读量"
+};
+
 class Article extends Component {
-  constructor(){
-      super()
-      this.state={
-        dataSource : [
-            {
-              key: "1",
-              name: "胡彦斌",
-              age: 32,
-              address: "西湖区湖底公园1号"
-            },
-            {
-              key: "2",
-              name: "胡彦祖",
-              age: 42,
-              address: "西湖区湖底公园1号"
-            }
-          ],
-          columns :[
-            {
-              title: "姓名",
-              dataIndex: "name",
-              key: "name"
-            },
-            {
-              title: "年龄",
-              dataIndex: "age",
-              key: "age"
-            },
-            {
-              title: "住址",
-              dataIndex: "address",
-              key: "address"
-            }
-          ],
-          total:0
-      }
+  constructor() {
+    super();
+    this.state = {
+      dataSource: [],
+      columns: [],
+      total: 0
+    };
   }
   render() {
+    console.log("render");
     return (
       <div>
         <Card title="文章列表" bordered={false} extra={<Button>导入</Button>}>
-          <Table dataSource={this.dataSource} columns={this.columns} pagination={{total:this.state.total,hideOnSinglePage:true}}></Table>
+          <Table
+            dataSource={this.state.dataSource}
+            columns={this.state.columns}
+            pagination={{ total: this.state.total, hideOnSinglePage: true }}
+          ></Table>
         </Card>
       </div>
     );
   }
-  componentDidMount(){
-    getArticles().then((data)=>{
-        this.setState({
-            total:data.total
-        })
-    })
+  componentDidMount() {
+    this.getData();
   }
+  createColumns = data => {
+    return Object.keys(data.list[0]).map(x => {
+      if (x === "amount") {
+        return {
+          title: titleDisplayMap[x],
+          render:(text,reccord)=>{
+          return <Tag color="green">{reccord.amount}</Tag>
+          },
+          key: x
+        };
+      }
+      return {
+        title: titleDisplayMap[x],
+        dataIndex: x,
+        key: x
+      };
+    });
+  };
+  getData = () => {
+    getArticles().then(data => {
+      const columns = this.createColumns(data);
+      this.setState({
+        total: data.total,
+        dataSource: data.list,
+        columns
+      });
+    });
+  };
 }
 
 export default Article;
