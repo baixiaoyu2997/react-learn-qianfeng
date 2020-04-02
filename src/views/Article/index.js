@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Button, Table, Tag, Modal, Typography } from "antd";
+import { Card, Button, Table, Tag, Modal, Typography, Tooltip } from "antd";
 import { getArticles, deleteArticle } from "../../requests";
 import moment from "moment";
 const ButtonGroup = Button.Group;
@@ -30,12 +30,16 @@ class Article extends Component {
     Modal.confirm({
       title: <Typography>`确定要删除${record.title}吗?`</Typography>,
       content: `此操作不可逆`,
-      onOk:()=>{
+      onOk: () => {
         deleteArticle(record.id).then(data => {
-          this.getData()
+          this.getData();
         });
       }
     });
+  };
+  // 去编辑页
+  toEdit = id => {
+    this.props.history.push(`/admin/article/edit/${id}`);
   };
   createColumns = data => {
     const columns = Object.keys(data.list[0]).map(x => {
@@ -43,7 +47,11 @@ class Article extends Component {
         return {
           title: titleDisplayMap[x],
           render: (text, reccord) => {
-            return <Tag color="green">{reccord.amount}</Tag>;
+            return (
+              <Tooltip title={reccord.amount}>
+                <Tag color="green">{reccord.amount}</Tag>
+              </Tooltip>
+            );
           },
           key: x
         };
@@ -70,7 +78,13 @@ class Article extends Component {
       render: (text, record) => {
         return (
           <ButtonGroup>
-            <Button size="samll" type="primary">
+            <Button
+              size="samll"
+              type="primary"
+              onClick={() => {
+                this.toEdit(record.id);
+              }}
+            >
               编辑
             </Button>
             <Button
