@@ -6,7 +6,8 @@ import {
   NotFound,
   Settings,
   ArticleList,
-  ArticleEdit
+  ArticleEdit,
+  Notifications
 } from "../views";
 export const mainRoutes = [
   {
@@ -45,5 +46,8 @@ export const adminRoutes = [
     title: "设置",
     icon:Icon.SettingOutlined,
     isNav: true
+  },{
+    pathname: "/admin/notifications",
+    component: Notifications,
   }
 ];

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Dropdown, Avatar, Badge } from "antd";
 
 import "./index.less";
 import { adminRoutes } from "../../routes";
@@ -12,9 +12,27 @@ class Frame extends Component {
   onMenuClick = ({ key }) => {
     this.props.history.push(key);
   };
+  onDropdownMenuClick=({key})=>{
+    this.props.history.push(key)
+  }
+  dropdownMenu = (
+    <Menu onClick={this.onDropdownMenuClick}>
+      <Menu.Item key="/admin/notifications">
+        <Badge dot>
+            通知中心
+        </Badge>
+      </Menu.Item>
+      <Menu.Item key="/admin/settings">
+          个人设置
+      </Menu.Item>
+      <Menu.Item key="/login">
+          退出登录
+      </Menu.Item>
+    </Menu>
+  );
   render() {
-    const selectedKeyArr=this.props.location.pathname.split('/')
-    selectedKeyArr.length=3
+    const selectedKeyArr = this.props.location.pathname.split("/");
+    selectedKeyArr.length = 3;
 
     return (
       <Layout style={{ minHeight: "100%" }}>
@@ -28,12 +46,20 @@ class Frame extends Component {
               alt=""
             ></img>
           </div>
+          <Dropdown overlay={this.dropdownMenu}>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Badge count="5">
+                <Avatar src="https://blog-pic.oss-cn-beijing.aliyuncs.com/avatar.webp" />
+                <span>欢迎您！xxx</span>
+              </Badge>
+            </div>
+          </Dropdown>
         </Header>
         <Layout>
           <Sider width={200} className="site-layout-background">
             <Menu
               mode="inline"
-              selectedKeys={[selectedKeyArr.join('/')]}
+              selectedKeys={[selectedKeyArr.join("/")]}
               onClick={this.onMenuClick}
               style={{ height: "100%", borderRight: 0 }}
             >
