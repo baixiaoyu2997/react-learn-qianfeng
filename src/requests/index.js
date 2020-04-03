@@ -36,3 +36,7 @@ export const deleteArticle = id => {
 export const getArticleById = id => {
   return service.post(`/api/v1/article/${id}`);
 };
+// 通过id保存文章
+export const saveArticle = (id,data) => {
+  return service.post(`/api/v1/articleEdit/${id}`,data);
+};
