@@ -5,13 +5,14 @@ import "./index.less";
 import { adminRoutes } from "../../routes";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { getNotificationsList } from "../../actions/notifications";
 const { Header, Content, Sider } = Layout;
 const mapState=state=>{
   return {
     notificationsCount:state.notifications.list.filter(item=>!item.hasRead).length
   }
 }
-@connect(mapState)
+@connect(mapState,{getNotificationsList})
 @withRouter
 class Frame extends Component {
   menus = adminRoutes.filter(route => route.isNav);
@@ -37,6 +38,9 @@ class Frame extends Component {
         </Menu.Item>
       </Menu>
     );
+  }
+  componentDidMount(){
+    this.props.getNotificationsList()
   }
   render() {
     const selectedKeyArr = this.props.location.pathname.split("/");

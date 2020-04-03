@@ -40,3 +40,7 @@ export const getArticleById = id => {
 export const saveArticle = (id,data) => {
   return service.post(`/api/v1/articleEdit/${id}`,data);
 };
+// 获取通知列表
+export const getNotifications=()=>{
+  return service.post('/api/v1/notifications')
+} 
