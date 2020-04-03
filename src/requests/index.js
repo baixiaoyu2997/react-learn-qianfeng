@@ -32,3 +32,7 @@ export const deleteArticle = id => {
     id
   });
 };
+// 通过id获取文章
+export const getArticleById = id => {
+  return service.post(`/api/v1/article/${id}`);
+};

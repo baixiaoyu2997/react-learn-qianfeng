@@ -1,6 +1,8 @@
 import React, { Component, createRef } from "react";
 import { Card, Button, Form, DatePicker, Input, InputNumber } from "antd";
+import { getArticleById } from "../../requests";
 import E from "wangeditor";
+import moment from 'moment'
 import './edit.less'
 const layout = {
   labelCol: {
@@ -27,6 +29,7 @@ class Edit extends Component {
   }
   onFinish = values => {
     console.log("Success:", values);
+    console.log(values.createAt.valueOf())
   };
 
   onFinishFailed = errorInfo => {
@@ -43,6 +46,18 @@ class Edit extends Component {
   };
   componentDidMount() {
     this.initEditor();
+    getArticleById(this.props.match.params.id).then(data=>{
+      const {title,author,amount,createAt,content}=data
+      console.log(data)
+      this.formRef.current.setFieldsValue({
+        title,
+        author,
+        amount,
+        createAt:moment(createAt),
+        content
+      })
+      this.editor.txt.html(content)
+    })
   }
   render() {
     return (
@@ -65,7 +80,7 @@ class Edit extends Component {
 
           <Form.Item
             label="作者"
-            name="auther"
+            name="author"
             rules={[
               {
                 required: true,
