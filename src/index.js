@@ -11,9 +11,11 @@ import zhCN from "antd/es/locale/zh_CN";
 import { mainRoutes } from "./routes";
 import "./index.less";
 import App from "./App";
-
+import store from './store'
+import { Provider  } from "react-redux";
 render(
-  <ConfigProvider locale={zhCN}>
+  <Provider store={store}>
+    <ConfigProvider locale={zhCN}>
     <Router>
       <Switch>
         <Route
@@ -35,6 +37,7 @@ render(
         <Redirect to="/404"></Redirect>
       </Switch>
     </Router>
-  </ConfigProvider>,
+  </ConfigProvider>
+  </Provider>,
   document.querySelector("#root")
 );

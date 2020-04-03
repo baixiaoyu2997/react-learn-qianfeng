@@ -4,8 +4,14 @@ import { Layout, Menu, Dropdown, Avatar, Badge } from "antd";
 import "./index.less";
 import { adminRoutes } from "../../routes";
 import { withRouter } from "react-router-dom";
-
+import { connect } from "react-redux";
 const { Header, Content, Sider } = Layout;
+const mapState=state=>{
+  return {
+    notificationsCount:state.notifications.list.filter(item=>!item.hasRead).length
+  }
+}
+@connect(mapState)
 @withRouter
 class Frame extends Component {
   menus = adminRoutes.filter(route => route.isNav);
@@ -18,7 +24,7 @@ class Frame extends Component {
   dropdownMenu = (
     <Menu onClick={this.onDropdownMenuClick}>
       <Menu.Item key="/admin/notifications">
-        <Badge dot>
+        <Badge dot={this.props.notificationsCount!==0}>
             通知中心
         </Badge>
       </Menu.Item>
@@ -48,7 +54,7 @@ class Frame extends Component {
           </div>
           <Dropdown overlay={this.dropdownMenu}>
             <div style={{ display: "flex", alignItems: "center" }}>
-              <Badge count="5">
+              <Badge count={this.props.notificationsCount}>
                 <Avatar src="https://blog-pic.oss-cn-beijing.aliyuncs.com/avatar.webp" />
                 <span>欢迎您！xxx</span>
               </Badge>
