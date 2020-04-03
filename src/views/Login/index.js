@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Input, Button, Checkbox, Card,Spin } from "antd";
+import { Form, Input, Button, Checkbox, Card } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
 import { login } from "../../actions/user";

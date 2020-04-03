@@ -6,41 +6,43 @@ import { adminRoutes } from "../../routes";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { getNotificationsList } from "../../actions/notifications";
+import { logout } from "../../actions/user";
 const { Header, Content, Sider } = Layout;
-const mapState=state=>{
+const mapState = state => {
   return {
-    notificationsCount:state.notifications.list.filter(item=>!item.hasRead).length
-  }
-}
-@connect(mapState,{getNotificationsList})
+    notificationsCount: state.notifications.list.filter(item => !item.hasRead)
+      .length,
+    avatar: state.user.avatar,
+    displayName: state.user.displayName
+  };
+};
+@connect(mapState, { getNotificationsList, logout })
 @withRouter
 class Frame extends Component {
   menus = adminRoutes.filter(route => route.isNav);
   onMenuClick = ({ key }) => {
     this.props.history.push(key);
   };
-  onDropdownMenuClick=({key})=>{
-    this.props.history.push(key)
-  }
-  dropdownMenu =()=> {
+  onDropdownMenuClick = ({ key }) => {
+    if (key === "/logout") {
+      this.props.logout();
+    } else {
+      this.props.history.push(key);
+    }
+  };
+  dropdownMenu = () => {
     return (
       <Menu onClick={this.onDropdownMenuClick}>
         <Menu.Item key="/admin/notifications">
-          <Badge dot={this.props.notificationsCount!==0}>
-              通知中心
-          </Badge>
+          <Badge dot={this.props.notificationsCount !== 0}>通知中心</Badge>
         </Menu.Item>
-        <Menu.Item key="/admin/settings">
-            个人设置
-        </Menu.Item>
-        <Menu.Item key="/login">
-            退出登录
-        </Menu.Item>
+        <Menu.Item key="/admin/settings">个人设置</Menu.Item>
+        <Menu.Item key="/logout">退出登录</Menu.Item>
       </Menu>
     );
-  }
-  componentDidMount(){
-    this.props.getNotificationsList()
+  };
+  componentDidMount() {
+    this.props.getNotificationsList();
   }
   render() {
     const selectedKeyArr = this.props.location.pathname.split("/");
@@ -61,8 +63,8 @@ class Frame extends Component {
           <Dropdown overlay={this.dropdownMenu}>
             <div style={{ display: "flex", alignItems: "center" }}>
               <Badge count={this.props.notificationsCount}>
-                <Avatar src="https://blog-pic.oss-cn-beijing.aliyuncs.com/avatar.webp" />
-                <span>欢迎您！xxx</span>
+                <Avatar src={this.props.avatar} />
+                <span>欢迎您！{this.props.displayName}</span>
               </Badge>
             </div>
           </Dropdown>
