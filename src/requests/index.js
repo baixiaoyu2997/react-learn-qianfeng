@@ -4,6 +4,9 @@ const isDev = process.env.NODE_ENV === "development";
 const service = axios.create({
   baseURL: isDev ? "http://rap2.taobao.org:38080/app/mock/249448" : ""
 });
+const service1 = axios.create({
+  baseURL: isDev ? "http://rap2.taobao.org:38080/app/mock/249448" : ""
+});
 service.interceptors.request.use(config => {
   config.data = Object.assign({}, config.data, {
     authToken: "sfsdfsdfsdf"
@@ -45,6 +48,6 @@ export const getNotifications=()=>{
   return service.post('/api/v1/notifications')
 } 
 // 登录
-export const login=()=>{
-  return service.post('/api/v1/login')
+export const doLogin=(userInfo)=>{
+  return service1.post('/api/v1/login',userInfo)
 } 
