@@ -44,3 +44,7 @@ export const saveArticle = (id,data) => {
 export const getNotifications=()=>{
   return service.post('/api/v1/notifications')
 } 
+// 登录
+export const login=()=>{
+  return service.post('/api/v1/login')
+} 
