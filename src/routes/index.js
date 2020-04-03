@@ -8,7 +8,8 @@ import {
   ArticleList,
   ArticleEdit,
   Notifications,
-  NoAuth
+  NoAuth,
+  Profile
 } from "../views";
 export const mainRoutes = [
   {
@@ -58,6 +59,10 @@ export const adminRoutes = [
   },{
     pathname: "/admin/noauth",
     component: NoAuth,
+    roles:['001','002','003']
+  },{
+    pathname: "/admin/profile",
+    component: Profile,
     roles:['001','002','003']
   }
 ];

@@ -32,4 +32,8 @@ const NoAuth = Loadable({
   loader: () => import("./NoAuth"),
   loading: Loading
 });
-export { Dashboard, Login, NotFound, Settings, ArticleList, ArticleEdit,Notifications,NoAuth };
+const Profile = Loadable({
+  loader: () => import("./Profile"),
+  loading: Loading
+});
+export { Dashboard, Login, NotFound, Settings, ArticleList, ArticleEdit,Notifications,NoAuth,Profile};

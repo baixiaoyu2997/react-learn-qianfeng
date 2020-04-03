@@ -108,6 +108,7 @@ class Article extends Component {
     getArticles()
       .then(data => {
         const columns = this.createColumns(data);
+        if(!this.updater.isMounted(this))return
         this.setState({
           total: data.total,
           dataSource: data.list,
@@ -115,6 +116,7 @@ class Article extends Component {
         });
       })
       .finally(() => {
+        if(!this.updater.isMounted(this))return
         this.setState({
           isLoading: false
         });
