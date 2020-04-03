@@ -28,4 +28,8 @@ const Notifications = Loadable({
   loader: () => import("./Notifications"),
   loading: Loading
 });
-export { Dashboard, Login, NotFound, Settings, ArticleList, ArticleEdit,Notifications };
+const NoAuth = Loadable({
+  loader: () => import("./NoAuth"),
+  loading: Loading
+});
+export { Dashboard, Login, NotFound, Settings, ArticleList, ArticleEdit,Notifications,NoAuth };

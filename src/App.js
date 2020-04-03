@@ -4,7 +4,8 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { Frame } from "./components";
 import { connect } from "react-redux";
 const mapState = state => ({
-  isLogin: state.user.isLogin
+  isLogin: state.user.isLogin,
+  role:state.user.role  
 });
 @connect(mapState)
 class App extends Component {
@@ -20,7 +21,8 @@ class App extends Component {
                 path={route.pathname}
                 exact={route.exact}
                 render={routerProps => {
-                  return <route.component {...routerProps} />;
+                  const hasPermission=route.roles.includes(this.props.role)
+                  return hasPermission?<route.component {...routerProps} />:<Redirect to="/admin/noauth"></Redirect>;
                 }}
               />
             );
