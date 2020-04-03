@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Button, List, Avatar, Badge } from "antd";
 import { connect } from "react-redux";
+import { markNotificationAsReadById,markAllNotificatioNsAsRead} from '../../actions/notifications'
 const data = [
   {
     title: "Ant Design Title 1"
@@ -21,7 +22,7 @@ const mapState=state=>{
     list
    }
 }
-@connect(mapState)
+@connect(mapState,{markNotificationAsReadById,markAllNotificatioNsAsRead})
 class Notifications extends Component {
   render() {
     console.log(this.props)
@@ -29,13 +30,14 @@ class Notifications extends Component {
       <Card
         title="通知中心"
         bordered={false}
-        extra={<Button disabled={this.props.list.every(item=>item.hasRead)}>全部标记为已读</Button>}
+        
+        extra={<Button disabled={this.props.list.every(item=>item.hasRead)} onClick={this.props.markAllNotificatioNsAsRead}>全部标记为已读</Button>}
       >
         <List
           itemLayout="horizontal"
           dataSource={this.props.list}
           renderItem={item => (
-            <List.Item extra={item.hasRead?null:<Button>标记为已读</Button>}>
+            <List.Item extra={item.hasRead?null:<Button onClick={()=>{this.props.markNotificationAsReadById(item.id)}}>标记为已读</Button>}>
               <List.Item.Meta
                 avatar={
                   <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />

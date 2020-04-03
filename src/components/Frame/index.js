@@ -21,21 +21,23 @@ class Frame extends Component {
   onDropdownMenuClick=({key})=>{
     this.props.history.push(key)
   }
-  dropdownMenu = (
-    <Menu onClick={this.onDropdownMenuClick}>
-      <Menu.Item key="/admin/notifications">
-        <Badge dot={this.props.notificationsCount!==0}>
-            通知中心
-        </Badge>
-      </Menu.Item>
-      <Menu.Item key="/admin/settings">
-          个人设置
-      </Menu.Item>
-      <Menu.Item key="/login">
-          退出登录
-      </Menu.Item>
-    </Menu>
-  );
+  dropdownMenu =()=> {
+    return (
+      <Menu onClick={this.onDropdownMenuClick}>
+        <Menu.Item key="/admin/notifications">
+          <Badge dot={this.props.notificationsCount!==0}>
+              通知中心
+          </Badge>
+        </Menu.Item>
+        <Menu.Item key="/admin/settings">
+            个人设置
+        </Menu.Item>
+        <Menu.Item key="/login">
+            退出登录
+        </Menu.Item>
+      </Menu>
+    );
+  }
   render() {
     const selectedKeyArr = this.props.location.pathname.split("/");
     selectedKeyArr.length = 3;
