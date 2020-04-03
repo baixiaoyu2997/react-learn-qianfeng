@@ -1,5 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import { Card, Button, Form, DatePicker, Input, InputNumber } from "antd";
+import E from "wangeditor";
+import './edit.less'
 const layout = {
   labelCol: {
     span: 4
@@ -17,10 +19,11 @@ const tailLayout = {
 class Edit extends Component {
   constructor() {
     super();
-    this.state = {
-      titleValidateStatus: "",
-      titleHelp: ""
-    };
+    this.state={
+      formState:{title:'这里是初始值'}
+    }
+    this.editorRef = createRef();
+    this.formRef = createRef();
   }
   onFinish = values => {
     console.log("Success:", values);
@@ -29,15 +32,26 @@ class Edit extends Component {
   onFinishFailed = errorInfo => {
     console.log("Failed:", errorInfo);
   };
+  initEditor = () => {
+    this.editor = new E(this.editorRef.current);
+    this.editor.customConfig.onchange=(html)=>{
+      this.formRef.current.setFieldsValue({
+        content:html
+      })
+    }
+    this.editor.create();
+  };
+  componentDidMount() {
+    this.initEditor();
+  }
   render() {
     return (
       <Card title="编辑文章" bordered={false} extra={<Button>取消</Button>}>
         <Form
           {...layout}
+          ref={this.formRef}
           name="basic"
-          initialValues={{
-            remember: true
-          }}
+          initialValues={this.state.formState}
           onFinish={this.onFinish}
           onFinishFailed={this.onFinishFailed}
         >
@@ -95,7 +109,7 @@ class Edit extends Component {
               }
             ]}
           >
-            <div>这里是内容</div>
+            <div className="qf-editor" ref={this.editorRef}></div>
           </Form.Item>
           <Form.Item {...tailLayout}>
             <Button type="primary" htmlType="submit">
