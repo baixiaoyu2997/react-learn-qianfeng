@@ -3,12 +3,13 @@ import {
   CounterBtn,
   CounterDisplay
 } from './components'
+import counterStore from './store' 
 function App() {
   return (
     <div className="App">
-      <CounterBtn>-</CounterBtn>
-      <CounterDisplay count={10}/>
-      <CounterBtn>+</CounterBtn>
+      <CounterBtn onClick={counterStore.decrement}>-</CounterBtn>
+      <CounterDisplay counterStore={counterStore}/>
+      <CounterBtn onClick={counterStore.increment}>+</CounterBtn>
     </div>
   );
 }
