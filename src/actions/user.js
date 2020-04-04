@@ -28,6 +28,14 @@ export const logout = () => {
     dispatch(loginFailed());
   };
 };
+export const changeAvatar=(avatarUrl)=>{
+  return {
+    type:actionTypes.CHANGE_AVATAR,
+    payload:{
+      avatarUrl
+    }
+  }
+}
 export const login = userInfo => {
   return dispatch => {
     dispatch(startLogin());
